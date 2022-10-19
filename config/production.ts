@@ -1,0 +1,13 @@
+export const puerto:number = Number ( process.env.PORT) || 5002;
+export const db_url = "mongodb://localhost:27017/percances";
+export const db_name = "percances";
+export const serverName = `http://localhost:${puerto}/`;
+export const auth_secret = "56gXxY{+D6/4m#kZ394j2=bT2eHqTAu>r8zAT>yEn:;TM#9*Vg";
+export const auth_ttl = 86400 * 1000;
+export const auth_algorithm = "aes256";
+export const auth_inputEncoding = "utf8";
+export const auth_outputEncoding = "hex";
+export const jwt_accessTokenSecret = "0d7c5c5f-768c-4d98-8900-13aadaa21937";
+export const jwt_refreshTokenSecret = "1a7v8c0l-391k-1f82-4492-tha3taa11334";
+export const jwt_accessTokenLife = "30d";
+export const refreshTokenLife = 2592000;
