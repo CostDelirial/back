@@ -39,8 +39,6 @@ export default class ServerHttp {
             this.httpServer.listen(this.port, () => {
                 console.log(`Servidor corriendo en el puerto: ${this.port}`);
             });
-        })
-
-        //console.log(await tallerAuthService.crearSudo());
+        });
     }
 }
