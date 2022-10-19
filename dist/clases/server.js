@@ -18,8 +18,8 @@ const http_1 = require("http");
 const path_1 = __importDefault(require("path"));
 const production_1 = require("../config/production");
 const production_2 = require("../config/production");
-// import UsuarioAuthService from '../controladoras/auth';
-// const usuarioAuthService = new UsuarioService;
+const auth_1 = __importDefault(require("../controladoras/auth"));
+const tallerAuthService = new auth_1.default;
 class ServerHttp {
     constructor() {
         this.app = (0, express_1.default)();
@@ -32,19 +32,16 @@ class ServerHttp {
     }
     iniciar() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield mongoose_1.default.connect(production_1.db_url, {
-                useCreateIndex: true,
-                useNewUrlParser: true,
-                useInifiedTopology: true
-            }, (err) => {
+            console.log(production_1.db_url);
+            mongoose_1.default.connect(production_1.db_url, err => {
                 if (err)
                     throw err;
-                console.log(`Base de datos ${production_1.db_name} en conexion`);
+                console.log(`Conectado a la base de datos ${production_1.db_name}`);
                 this.httpServer.listen(this.port, () => {
-                    console.log(`Base de datos corriendo en puerto ${this.port}`);
+                    console.log(`Servidor corriendo en el puerto: ${this.port}`);
                 });
             });
-            console.log(yield usuarioAuthService.crearSudo());
+            //console.log(await tallerAuthService.crearSudo());
         });
     }
 }

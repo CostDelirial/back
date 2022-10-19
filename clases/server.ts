@@ -5,9 +5,10 @@ import path from "path";
 
 import { db_url, db_name } from "../config/production";
 import { puerto } from '../config/production';
-// import UsuarioAuthService from '../controladoras/auth';
 
-// const usuarioAuthService = new UsuarioService;
+import TallerAuthService from '../controladoras/auth';
+
+ const tallerAuthService = new TallerAuthService;
 
 export default class ServerHttp {
     private static _instance: ServerHttp;
@@ -30,17 +31,16 @@ export default class ServerHttp {
     }
 
     async iniciar(): Promise<any> {
-        await mongoose.connect(db_url, {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useInifiedTopology: true
-        }, ( err ) => {
-            if( err ) throw err;
-            console.log(`Base de datos ${db_name} en conexion`);
-            this.httpServer.listen( this.port, () => {
-                console.log(`Base de datos corriendo en puerto ${this.port}`)
+        console.log(db_url)
+        mongoose.connect(db_url, err => {
+            if (err)
+                throw err;
+            console.log(`Conectado a la base de datos ${db_name}`);
+            this.httpServer.listen(this.port, () => {
+                console.log(`Servidor corriendo en el puerto: ${this.port}`);
             });
-        });
-        console.log(await usuarioAuthService.crearSudo());
+        })
+
+        //console.log(await tallerAuthService.crearSudo());
     }
 }

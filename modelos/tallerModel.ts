@@ -12,4 +12,5 @@ const tallerSchema: Schema = new Schema ({
     status: { type: String},
     saltTA: { type: String }
 }, { collection: 'talleres' } );
-export 
+
+export default mongoose.model( 'Taller', tallerSchema);
