@@ -8,23 +8,10 @@ import { jwt_accessTokenSecret, jwt_refreshTokenSecret, serverName } from '../co
 export default class AuthTallerService {
     constructor() { }
 
-    async verificarSudo() {
-        let respuesta = true;
+    
 
-        await Taller.findOne({ role: 'SUDO' }, (err: any, sudoDB: any) => {
-            if (err) {
-                throw err;
-            }
 
-            if (sudoDB) {
-                return respuesta = true;
-            }
-
-            return respuesta = false;
-        })
-
-        return respuesta;
-    }
+    
 
     
 }

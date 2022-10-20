@@ -32,7 +32,6 @@ class ServerHttp {
     }
     iniciar() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(production_1.db_url);
             mongoose_1.default.connect(production_1.db_url, err => {
                 if (err)
                     throw err;

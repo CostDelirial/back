@@ -31,7 +31,6 @@ export default class ServerHttp {
     }
 
     async iniciar(): Promise<any> {
-        console.log(db_url)
         mongoose.connect(db_url, err => {
             if (err)
                 throw err;
