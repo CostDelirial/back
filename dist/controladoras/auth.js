@@ -77,7 +77,7 @@ class AuthTallerService {
                     return existe = true;
                 }
                 return existe = false;
-            });
+            }).clone();
             return existe;
         });
     }

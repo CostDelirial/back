@@ -52,7 +52,7 @@ export default class AuthTallerService {
             }
 
             return existe = false;
-        });
+        }).clone();
 
         return existe;
     }

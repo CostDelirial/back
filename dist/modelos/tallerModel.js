@@ -24,6 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const rolesValidos = {
+    values: ["ADMIN_ROLE", "USER_ROLE"],
+    menssage: "{VALUE} no es un role permitido"
+};
 const tallerSchema = new mongoose_1.Schema({
     email: { type: String, uppercase: false },
     nombre: { type: String, uppercase: true },
@@ -32,8 +36,8 @@ const tallerSchema = new mongoose_1.Schema({
     telefono: { type: Number },
     lat: { type: Number },
     lng: { type: Number },
-    role: { type: String },
+    role: { type: String, enum: rolesValidos, default: 'ADMIN_ROLE' },
     status: { type: String },
     saltTA: { type: String }
-}, { collection: 'talleres' });
-exports.default = mongoose_1.default.model('Taller', tallerSchema);
+}, { collection: "talleres" });
+exports.default = mongoose_1.default.model("Taller", tallerSchema);
