@@ -21,9 +21,10 @@ server.app.use( fileUpload() );
 server.app.use(cors({ origin: '*', credentials: true }));
 
 // Importación de rutas
+import authTallerRoutes from "./rutas/authRuta";
 
 // Seteo de rutas
-
+server.app.use('/api', authTallerRoutes);
 
 server.iniciar();
 

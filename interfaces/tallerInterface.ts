@@ -9,7 +9,7 @@ export interface ITaller {
     lng: number,
     role: string,
     status: string,
-    saltTA: string
+    salt?: string
 }
 
 export interface ITallerUpdate {
