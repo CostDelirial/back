@@ -33,11 +33,11 @@ const tallerSchema = new mongoose_1.Schema({
     nombre: { type: String, uppercase: true },
     nombreTaller: { type: String, uppercase: true },
     password: { type: String },
-    telefono: { type: Number },
+    telefono: { type: String },
     lat: { type: Number },
     lng: { type: Number },
     role: { type: String, enum: rolesValidos, default: 'ADMIN_ROLE' },
     status: { type: String },
-    saltTA: { type: String }
+    salt: { type: String }
 }, { collection: "talleres" });
 exports.default = mongoose_1.default.model("Taller", tallerSchema);

@@ -24,7 +24,7 @@ server.app.use(cors({ origin: '*', credentials: true }));
 import authTallerRoutes from "./rutas/authRuta";
 
 // Seteo de rutas
-server.app.use('/api', authTallerRoutes);
+server.app.use('/api/taller', authTallerRoutes);
 
 server.iniciar();
 

@@ -9,6 +9,7 @@ export function genRandomString(length: number) {
 }
 
 export function getStringValue(data: { toString: () => any; }) {
+    
     if (typeof data === 'number' || data instanceof Number) {
         return data.toString();
     }
@@ -47,7 +48,6 @@ export function generateResetPasswordToken(userId: any) {
 }
 
 export async function generarToken(usuario: any, callback: Function) {
-
     const payload = {
         usuario
     }

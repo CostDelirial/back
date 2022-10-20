@@ -81,5 +81,43 @@ class AuthTallerService {
             return existe;
         });
     }
+    login(tel, pass, callback) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield tallerModel_1.default.findOne({ telefono: tel }, (err, tallerDB) => __awaiter(this, void 0, void 0, function* () {
+                console.log(tallerDB);
+                if (err) {
+                    return callback({ ok: false, mensaje: " Error en la base de Datos", respuesta: err, codigo: 500 });
+                }
+                if (!tallerDB) {
+                    return callback({ ok: false, mensaje: "Datos incorrectos", respuesta: null, codigo: 400 });
+                }
+                const passwordHash = yield encriptar.sha512(pass, tallerDB.salt);
+                if (tallerDB.password !== passwordHash.passwordHash) {
+                    return callback({ ok: false, mensaje: "Datos Incorrectos", respuesta: null, codigo: 404 });
+                }
+                if (tallerDB.status === "INACTIVO") {
+                    if (tallerDB.role !== "ADMIN_ROLE") {
+                        return callback({ ok: false, mensaje: "Usuario inactivo, revisa con tu administrador", respuesta: null, codigo: 403 });
+                    }
+                    else {
+                        return callback({ ok: false, mensaje: "Usuario inactivo", respuesta: null, codigo: 400 });
+                    }
+                }
+                const tallerFront = {
+                    id: tallerDB._id,
+                    nombre: tallerDB.nombre,
+                    nombreTaller: tallerDB.nombreTaller,
+                    telefono: tallerDB.telefono,
+                    role: tallerDB.role,
+                    email: tallerDB.email,
+                    status: tallerDB.status
+                };
+                console.log(tallerFront);
+                yield encriptar.generarToken(tallerFront, (respuestaT) => __awaiter(this, void 0, void 0, function* () {
+                    return callback({ ok: true, mensaje: "Inicio de sesion exitoso", respuesta: null, codigo: 200, token: respuestaT });
+                }));
+            })).clone();
+        });
+    }
 }
 exports.default = AuthTallerService;

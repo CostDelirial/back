@@ -22,5 +22,5 @@ server.app.use((0, cors_1.default)({ origin: '*', credentials: true }));
 // Importación de rutas
 const authRuta_1 = __importDefault(require("./rutas/authRuta"));
 // Seteo de rutas
-server.app.use('/api', authRuta_1.default);
+server.app.use('/api/taller', authRuta_1.default);
 server.iniciar();

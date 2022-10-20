@@ -16,9 +16,16 @@ const express_1 = require("express");
 const auth_1 = __importDefault(require("../controladoras/auth"));
 const authTallerRoutes = (0, express_1.Router)();
 const authTallerService = new auth_1.default;
-authTallerRoutes.post("/taller/registrar", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+authTallerRoutes.post("/registrar", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const taller = req.body;
     let respuesta = yield authTallerService.crearAdmin(taller);
     return res.status(respuesta.codigo).json(respuesta);
+}));
+authTallerRoutes.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const telefono = req.body.telefono;
+    const pass = req.body.password;
+    authTallerService.login(telefono, pass, (respuesta) => {
+        return res.status(respuesta.codigo).json(respuesta);
+    });
 }));
 exports.default = authTallerRoutes;

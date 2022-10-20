@@ -4,7 +4,7 @@ export interface ITaller {
     nombre: string,
     nombreTaller: string,
     password: string,
-    telefono: number,
+    telefono: string,
     lat: number,
     lng: number,
     role: string,
