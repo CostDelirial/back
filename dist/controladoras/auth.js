@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tallerModel_1 = __importDefault(require("../modelos/tallerModel"));
+const usuarioTallerModel_1 = __importDefault(require("../modelos/usuarioTallerModel"));
 const encriptar = __importStar(require("../funciones/encriptar"));
 class AuthTallerService {
     constructor() { }
@@ -117,6 +118,25 @@ class AuthTallerService {
                     return callback({ ok: true, mensaje: "Inicio de sesion exitoso", respuesta: null, codigo: 200, token: respuestaT });
                 }));
             })).clone();
+        });
+    }
+    crearUsuario(data, admin, callback) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!admin.id) {
+                return callback({ ok: false, mensaje: "No eres admin", respuesta: null, codigo: 400 });
+            }
+            let password = yield encriptar.passwordSeguro();
+            const { salt, passwordHash } = yield encriptar.generarPassword(password);
+            data.password = yield passwordHash;
+            data.salt = yield salt;
+            data.nombreTaller = yield admin.id;
+            data.role = "USER_ROLE";
+            usuarioTallerModel_1.default.create(data, (err, userTallerCreado) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    return callback({ ok: false, mensaje: "Error en base de datos", respuesta: err, codigo: 500 });
+                }
+                return callback({ ok: true, mensaje: "Usuario creado", respuesta: userTallerCreado, codigo: 200 });
+            }));
         });
     }
 }

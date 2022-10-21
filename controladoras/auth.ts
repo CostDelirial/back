@@ -1,7 +1,9 @@
 import { verify } from "jsonwebtoken";
 
 import { ITaller } from "../interfaces/tallerInterface";
+import { IUserTaller } from './../interfaces/userTaller';
 import Taller from "../modelos/tallerModel";
+import UserTaller from "../modelos/usuarioTallerModel";
 import IRespuesta from "../interfaces/respuesta";
 import * as encriptar from "../funciones/encriptar";
 import { jwt_accessTokenSecret, jwt_refreshTokenSecret, serverName } from '../config/production';
@@ -97,6 +99,27 @@ export default class AuthTallerService {
             })
 
         }).clone();
+    }
+
+    async crearUsuario( data: IUserTaller,admin: ITaller, callback: Function ){
+        if(!admin.id){
+            return callback({ ok: false, mensaje: "No eres admin", respuesta: null, codigo: 400 })
+        }
+
+        let password = await encriptar.passwordSeguro();
+        const { salt, passwordHash } = await encriptar.generarPassword(password);
+
+        data.password = await passwordHash;
+        data.salt = await salt;
+        data.nombreTaller = await admin.id;
+        data.role = "USER_ROLE"
+        UserTaller.create( data, async( err: any, userTallerCreado: any ) => {
+            if(err){
+                return callback({ ok: false, mensaje: "Error en base de datos", respuesta: err, codigo: 500 })
+            }
+            return callback({ ok: true, mensaje:"Usuario creado", respuesta: userTallerCreado, codigo: 200 })
+        })
+
     }
 
     

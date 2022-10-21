@@ -24,20 +24,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const rolesValidos = {
-    values: ['ADMIN_ROLE'],
-    menssage: '{VALUE} no es un role permitido'
+const rolesvalidos = {
+    values: ['USER_ROLE'],
+    message: '{VALUE} no es un rol permitido'
 };
-const tallerSchema = new mongoose_1.Schema({
-    email: { type: String, lowercase: true },
+const statusValidos = {
+    values: ['ACTIVO', 'DESACTIVADO'],
+    message: '{VALUE} no es un estatus permitido'
+};
+const userTallerSchema = new mongoose_1.Schema({
     nombre: { type: String, uppercase: true },
-    nombreTaller: { type: String, uppercase: true, unique: true },
-    password: { type: String },
+    nombreTaller: { type: mongoose_1.Schema.Types.ObjectId, ref: 'talleres' },
+    email: { type: String, lowecase: true },
     telefono: { type: String },
-    lat: { type: Number },
-    lng: { type: Number },
-    role: { type: String, enum: rolesValidos, default: 'ADMIN_ROLE' },
-    status: { type: String },
-    salt: { type: String }
-}, { collection: "talleres" });
-exports.default = mongoose_1.default.model("Taller", tallerSchema);
+    password: { type: String },
+    role: { type: String, enum: rolesvalidos, default: 'USER_ROLE' },
+    status: { type: String, enum: statusValidos, default: 'ACTIVO' }
+}, { collection: "tallerUsuarios" });
+exports.default = mongoose_1.default.model("UserTaller", userTallerSchema);

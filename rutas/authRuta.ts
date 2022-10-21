@@ -19,5 +19,15 @@ authTallerRoutes.post("/login", async(req: Request, res: Response ) => {
     authTallerService.login( telefono, pass, ( respuesta: IRespuesta) => {
         return res.status( respuesta.codigo).json(respuesta)
     })
-})
+});
+
+authTallerRoutes.post("/registroUser", verificaToken, async( req: Request, res: Response ) => {
+    const admin = req.body.taller.usuario
+    const data = req.body;
+
+    await authTallerService.crearUsuario(data, admin, ( respuesta: IRespuesta) => {
+        return res.status( respuesta.codigo).json( respuesta )
+    });
+
+});
 export default authTallerRoutes;

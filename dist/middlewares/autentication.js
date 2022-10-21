@@ -23,7 +23,7 @@ function verificaToken(req, res, next) {
                     err
                 });
             }
-            req.body.taller = decodificado.taller;
+            req.body.taller = decodificado;
             next();
         }));
     });
