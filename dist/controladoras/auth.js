@@ -60,7 +60,7 @@ class AuthTallerService {
                     return callback = yield { ok: false, mensaje: 'Error en base de datos', respuesta: err, codigo: 500 };
                 }
                 yield setTimeout(() => { }, 1000);
-                callback = yield { ok: true, mensaje: 'Taller creado', respuesta: null, codigo: 200 };
+                callback = yield { ok: true, mensaje: 'Taller creado', respuesta: tallerCreado, codigo: 200 };
             }));
             return yield callback;
         });
@@ -91,6 +91,7 @@ class AuthTallerService {
                 if (!tallerDB) {
                     return callback({ ok: false, mensaje: "Datos incorrectos", respuesta: null, codigo: 400 });
                 }
+                console.log(pass);
                 const passwordHash = yield encriptar.sha512(pass, tallerDB.salt);
                 if (tallerDB.password !== passwordHash.passwordHash) {
                     return callback({ ok: false, mensaje: "Datos Incorrectos", respuesta: null, codigo: 404 });
@@ -112,7 +113,6 @@ class AuthTallerService {
                     email: tallerDB.email,
                     status: tallerDB.status
                 };
-                console.log(tallerFront);
                 yield encriptar.generarToken(tallerFront, (respuestaT) => __awaiter(this, void 0, void 0, function* () {
                     return callback({ ok: true, mensaje: "Inicio de sesion exitoso", respuesta: null, codigo: 200, token: respuestaT });
                 }));

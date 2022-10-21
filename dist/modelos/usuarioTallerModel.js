@@ -22,8 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-validator"));
 const rolesvalidos = {
     values: ['USER_ROLE'],
     message: '{VALUE} no es un rol permitido'
@@ -39,6 +43,8 @@ const userTallerSchema = new mongoose_1.Schema({
     telefono: { type: String, unique: true },
     password: { type: String },
     role: { type: String, enum: rolesvalidos, default: 'USER_ROLE' },
-    status: { type: String, enum: statusValidos, default: 'ACTIVO' }
+    status: { type: String, enum: statusValidos, default: 'ACTIVO' },
+    salt: { type: String }
 }, { collection: "tallerUsuarios" });
+userTallerSchema.plugin(mongoose_unique_validator_1.default, { message: '{PATH} debe ser unico' });
 exports.default = mongoose_1.default.model("UserTaller", userTallerSchema);
