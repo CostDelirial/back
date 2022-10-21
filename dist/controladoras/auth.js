@@ -85,7 +85,6 @@ class AuthTallerService {
     login(tel, pass, callback) {
         return __awaiter(this, void 0, void 0, function* () {
             yield tallerModel_1.default.findOne({ telefono: tel }, (err, tallerDB) => __awaiter(this, void 0, void 0, function* () {
-                console.log(tallerDB);
                 if (err) {
                     return callback({ ok: false, mensaje: " Error en la base de Datos", respuesta: err, codigo: 500 });
                 }
@@ -132,6 +131,7 @@ class AuthTallerService {
             data.nombreTaller = yield admin.id;
             data.role = "USER_ROLE";
             usuarioTallerModel_1.default.create(data, (err, userTallerCreado) => __awaiter(this, void 0, void 0, function* () {
+                console.log(err); // cachar error de telefono repetido
                 if (err) {
                     return callback({ ok: false, mensaje: "Error en base de datos", respuesta: err, codigo: 500 });
                 }

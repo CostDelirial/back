@@ -61,7 +61,7 @@ export default class AuthTallerService {
     async login(tel: string, pass: string, callback: Function): Promise<any> {
        
         await Taller.findOne( {telefono: tel}, async (err: any, tallerDB: any ) => {
-            console.log(tallerDB)
+            
             if ( err ){
                 return callback({ ok: false, mensaje: " Error en la base de Datos", respuesta: err, codigo: 500 });
             }
@@ -114,6 +114,7 @@ export default class AuthTallerService {
         data.nombreTaller = await admin.id;
         data.role = "USER_ROLE"
         UserTaller.create( data, async( err: any, userTallerCreado: any ) => {
+            console.log(err)// cachar error de telefono repetido
             if(err){
                 return callback({ ok: false, mensaje: "Error en base de datos", respuesta: err, codigo: 500 })
             }
